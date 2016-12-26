@@ -44,6 +44,11 @@ public class BillResource {
 		return Response.status(200).entity(bc.loadBillById(bill_id)).build();
 	  }
 	
+	@GET
+	public String getVersion(){
+		return "Tests v1";
+	}
+	
 	@DELETE
 	@Path("remove/{bill_id}")
 	public Response removeBillById(@PathParam("bill_id")int bill_id){

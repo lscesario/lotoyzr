@@ -8,6 +8,16 @@
   <name>lotoyzr</name>
   <url>http://maven.apache.org</url>
   <dependencies>
+  	<dependency>
+	    <groupId>org.keycloak</groupId>
+	    <artifactId>keycloak-core</artifactId>
+	    <version>2.4.0.Final</version>
+	</dependency>
+	<dependency>
+	    <groupId>org.keycloak</groupId>
+	    <artifactId>keycloak-admin-client</artifactId>
+	    <version>2.4.0.Final</version>
+	</dependency>
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
