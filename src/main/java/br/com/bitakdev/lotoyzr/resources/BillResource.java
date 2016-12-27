@@ -32,7 +32,7 @@ public class BillResource {
 		String result="Bill created: "+bill;
 		return Response.status(201).entity(result).build();
 	}
-	
+
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	@Path("{bill_id}")

@@ -6,10 +6,12 @@ import java.util.logging.Logger;
 import javax.ejb.Stateful;
 import javax.enterprise.context.Dependent;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.PersistenceContextType;
 import javax.persistence.PersistenceException;
 
+import br.com.bitakdev.lotoyzr.conf.Constants;
 import br.com.bitakdev.lotoyzr.models.Member;
 
 @Dependent
@@ -52,6 +54,23 @@ public class MemberDAO {
 	public Member loadMemberById(int member_id){
 		System.out.println("Retrieving member id: "+member_id);
 		return manager.find(Member.class, member_id);
+	}
+
+	public Member loadMemberByFbId(String member_fb_id) {
+		 System.out.println("Retrieving Facebook member id: "+member_fb_id);		 
+		 try{
+		 String query = "select a from Member a where a.member_fb_id=:member_fb_id";
+		 		Member i = manager.createQuery(query, Member.class)
+				 					.setParameter("member_fb_id", member_fb_id)
+				 					.getSingleResult();
+		 		System.out.println("FB User Recuperado: "+i.toString());
+		 		return loadMemberById(i.getMember_id());
+		 }
+		 catch(NoResultException e){
+			 Member m = new Member();
+			 m.setMember_id(Constants.VOCE_NAO_VALE_NADA);
+			 return m;
+		 }
 	}
 		
 }

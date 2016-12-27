@@ -19,6 +19,7 @@ public class Member {
 	private String member_bank;
 	private String member_bank_account;
 	private Calendar member_created_date;
+	private String member_fb_id;
 	
 	
 	public Integer getMember_id() {
@@ -58,6 +59,14 @@ public class Member {
 	public void setMember_created_date(Calendar member_created_date) {
 		this.member_created_date = member_created_date;
 	}
+	public String getMember_fb_id() {
+		return member_fb_id;
+	}
+	public void setMember_fb_id(String member_fb_id) {
+		this.member_fb_id = member_fb_id;
+	}
+	
+	
 	@Override
 	public String toString() {
 		return "Member [member_id=" + member_id + ", member_name=" + member_name + ", member_age=" + member_age
