@@ -63,7 +63,7 @@ public class MemberDAO {
 		 		Member i = manager.createQuery(query, Member.class)
 				 					.setParameter("member_fb_id", member_fb_id)
 				 					.getSingleResult();
-		 		System.out.println("FB User Recuperado: "+i.toString());
+		 		System.out.println("Got Member: "+i.toString());
 		 		return loadMemberById(i.getMember_id());
 		 }
 		 catch(NoResultException e){
@@ -72,5 +72,22 @@ public class MemberDAO {
 			 return m;
 		 }
 	}
+
+	public Member loadMemberByUsername(String member_email) {
+		System.out.println("Retrieving user by username: "+ member_email);
+		try{
+		String query = "select a from Member a where a.member_email=:member_email";
+				Member m = manager.createQuery(query, Member.class)
+						.setParameter("member_email", member_email)
+	 					.getSingleResult();
+				System.out.println("Got Member: "+m.toString());
+				return m;
+		}catch(NoResultException e){
+			Member m = new Member();
+			m.setMember_id(Constants.VOCE_NAO_VALE_NADA);
+			return m;
+		}	
+	}
+	
 		
 }

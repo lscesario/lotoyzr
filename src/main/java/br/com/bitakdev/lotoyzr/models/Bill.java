@@ -8,8 +8,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.xml.bind.annotation.XmlRootElement;
+import javax.persistence.ManyToOne;
 import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 
 @Entity
 @XmlRootElement
@@ -24,6 +25,9 @@ public class Bill {
 	private String bill_status;
 	private Calendar bill_last_update_date;
 	private Calendar bill_created_date;
+	private String bill_description;
+	@ManyToOne
+	private Member bill_responsible;
 
 	
 	public String getBill_status() {
