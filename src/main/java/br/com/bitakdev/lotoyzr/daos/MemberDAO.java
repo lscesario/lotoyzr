@@ -1,5 +1,6 @@
 package br.com.bitakdev.lotoyzr.daos;
 
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -13,6 +14,7 @@ import javax.persistence.PersistenceException;
 
 import br.com.bitakdev.lotoyzr.conf.Constants;
 import br.com.bitakdev.lotoyzr.models.Member;
+import br.com.bitakdev.lotoyzr.security.LoginControl;
 
 @Dependent
 @Stateful
@@ -87,6 +89,11 @@ public class MemberDAO {
 			m.setMember_id(Constants.VOCE_NAO_VALE_NADA);
 			return m;
 		}	
+	}
+
+	public List<String> loadMemberRolesByUsername() {
+		
+		return null;
 	}
 	
 		

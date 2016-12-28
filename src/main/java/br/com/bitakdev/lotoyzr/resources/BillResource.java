@@ -20,6 +20,7 @@ import br.com.bitakdev.lotoyzr.operations.BillControl;
 @Path("/bills")
 public class BillResource {
 	
+		
 	@Inject
 	BillControl bc;
 	

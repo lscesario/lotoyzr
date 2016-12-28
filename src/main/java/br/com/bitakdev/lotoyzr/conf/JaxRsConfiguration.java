@@ -1,4 +1,4 @@
-package br.com.bitakdev.lotoyzr.resources;
+package br.com.bitakdev.lotoyzr.conf;
 
 
 import javax.ws.rs.ApplicationPath;

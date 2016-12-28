@@ -105,7 +105,6 @@ public class JwtSecurityExample {
 			return Response.status(403).entity("authentication_error").build();
 		};
 		
-		
 		JsonWebKey jwk = createJWT();
 		RsaJsonWebKey senderJwk=(RsaJsonWebKey)jwkList.get(0);
 		senderJwk.setKeyId("1");
