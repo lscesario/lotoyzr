@@ -1,6 +1,7 @@
 package br.com.bitakdev.lotoyzr.resources;
 
 
+
 import javax.inject.Inject;
 import javax.ws.rs.BadRequestException;
 import javax.ws.rs.Consumes;
@@ -31,6 +32,14 @@ public class MemberResource {
 		mc.createMember(member);
 		String result="Member created: "+member;
 		return Response.status(201).entity(result).build();
+	}
+	
+	@POST
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Path("/sync")
+	public Response checkFbMember(Member member){
+		if (member == null) throw new BadRequestException();
+		return mc.syncFbMember(member);
 	}
 	
 	@GET

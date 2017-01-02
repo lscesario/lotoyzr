@@ -1,0 +1,39 @@
+Conta
+Criar conta
+Associar responsável pela conta
+Definir valor do mês da conta - OK
+Marcar/Desmarcar conta como valor fixo
+
+Membros
+Convidar membro para casa
+Remover membro da casa
+Sair da minha casa
+Alterar minhas informações
+Definir data de processamento do calculo mensal
+
+Casa
+Criar casa
+Deletar casa
+Alterar informações da casa
+Associar membro como administrador da casa
+Associar membro como funcionário da casa
+Chat da casa?
+
+Lista de compras
+Adicionar item na lista de compra
+Remover item da lista de compra
+Marcar item como comprado
+Alterar item na lista de compra
+
+Serviços
+Remover item comprado da lista de compra
+Processar calculo do mês
+Enviar lembrete de pagamento de conta
+Registro de usuario
+Registro de usuario pelo facebook
+Login de usuario - OK
+Autenticação JWT de API - OK
+Hashear senhas
+
+
+

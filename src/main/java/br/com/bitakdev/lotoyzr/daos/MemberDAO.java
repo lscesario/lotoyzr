@@ -1,16 +1,22 @@
 package br.com.bitakdev.lotoyzr.daos;
 
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.ejb.Stateful;
 import javax.enterprise.context.Dependent;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.PersistenceContextType;
 import javax.persistence.PersistenceException;
+import javax.persistence.TypedQuery;
 
+import br.com.bitakdev.lotoyzr.conf.Constants;
+import br.com.bitakdev.lotoyzr.models.House;
 import br.com.bitakdev.lotoyzr.models.Member;
+import br.com.bitakdev.lotoyzr.security.LoginControl;
 
 @Dependent
 @Stateful
@@ -53,5 +59,50 @@ public class MemberDAO {
 		System.out.println("Retrieving member id: "+member_id);
 		return manager.find(Member.class, member_id);
 	}
-		
+
+	public Member loadMemberByFbId(String member_fb_id) {
+		 System.out.println("Retrieving Facebook member id: "+member_fb_id);		 
+		 try{
+		 String query = "select a from Member a where a.member_fb_id=:member_fb_id";
+		 		Member i = manager.createQuery(query, Member.class)
+				 					.setParameter("member_fb_id", member_fb_id)
+				 					.getSingleResult();
+		 		System.out.println("Got Member: "+i.toString());
+		 		return loadMemberById(i.getMember_id());
+		 }
+		 catch(NoResultException e){
+			 Member m = new Member();
+			 m.setMember_id(Constants.VOCE_NAO_VALE_NADA);
+			 return m;
+		 }
+	}
+
+	public Member loadMemberByEmail(String member_email) {
+		System.out.println("Retrieving user by username: "+ member_email);
+		try{
+		String query = "select a from Member a where a.member_email=:member_email";
+				Member m = manager.createQuery(query, Member.class)
+						.setParameter("member_email", member_email)
+	 					.getSingleResult();
+				System.out.println("Got Member: "+m.toString());
+				return m;
+		}catch(NoResultException e){
+			Member m = new Member();
+			m.setMember_id(Constants.VOCE_NAO_VALE_NADA);
+			return m;
+		}	
+	}
+
+	public List<Member> loadMemberRolesByMemberId(int member_id){
+		TypedQuery<Member> query = manager.createQuery("select m from Member m join m.member_member_roles r where r.member_id=:member_id", Member.class)
+				  .setParameter("member_id", member_id);
+		return query.getResultList();
+	}
+	
+	public List<Member> loadMemberRolesByMemberEmail(String member_email){
+		Member member=loadMemberByEmail(member_email);
+		TypedQuery<Member> query = manager.createQuery("select m from Member m join m.member_member_roles r where r.member_id=:member_id", Member.class)
+				  .setParameter("member", member.getMember_id());
+		return query.getResultList();
+	}
 }
