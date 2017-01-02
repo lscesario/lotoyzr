@@ -4,6 +4,7 @@ import javax.enterprise.inject.Model;
 import javax.inject.Inject;
 import javax.transaction.Transactional;
 
+import br.com.bitakdev.lotoyzr.conf.Constants;
 import br.com.bitakdev.lotoyzr.daos.HouseDAO;
 import br.com.bitakdev.lotoyzr.daos.MemberDAO;
 import br.com.bitakdev.lotoyzr.models.House;
@@ -20,26 +21,26 @@ public class HouseControl {
 	@Inject
 	MemberDAO memberDAO;
 	@Inject
-	HouseUtil houseUtil;
+	HouseUtil hu;
 	
 	@Transactional
 	public String createHouse(House house){
 		System.out.println(house.toString());
 		try{
-			if(houseUtil.checkHouseIntegrity(house).equals("tudo_certo")){
+			if(hu.checkHouseIntegrity(house).equals(Constants.RETURN_METHOD_OK)){
 			houseDAO.createHouse(house);
 			return "House "+house.getHouse_id()+" created";
 				}
 			else
 				{
 				System.out.println("Um dos administradores associados a casa gerencia mais de quatro casas");
-				return "Um dos administradores associados a casa gerencia mais de quatro casas";
+				return "admin_max_houses_reached";
 			}
 		}
 		catch(NullPointerException e){
 			System.out.println(e);
 		}
-		return "unexpected";
+		return Constants.RETURN_METHOD_UNEXPECTED;
 	}
 	
 	public void removeHouseById(int house){

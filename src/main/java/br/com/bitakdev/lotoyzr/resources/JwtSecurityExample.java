@@ -176,7 +176,7 @@ public class JwtSecurityExample {
 	
 	  String authenticate(String username, String password){
 			Member member = new Member();
-			member=memberDAO.loadMemberByUsername(username);
+			member=memberDAO.loadMemberByEmail(username);
 			if(member==null){
 				return "member_not_found";
 			}

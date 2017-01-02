@@ -11,8 +11,10 @@ import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.PersistenceContextType;
 import javax.persistence.PersistenceException;
+import javax.persistence.TypedQuery;
 
 import br.com.bitakdev.lotoyzr.conf.Constants;
+import br.com.bitakdev.lotoyzr.models.House;
 import br.com.bitakdev.lotoyzr.models.Member;
 import br.com.bitakdev.lotoyzr.security.LoginControl;
 
@@ -75,7 +77,7 @@ public class MemberDAO {
 		 }
 	}
 
-	public Member loadMemberByUsername(String member_email) {
+	public Member loadMemberByEmail(String member_email) {
 		System.out.println("Retrieving user by username: "+ member_email);
 		try{
 		String query = "select a from Member a where a.member_email=:member_email";
@@ -91,10 +93,16 @@ public class MemberDAO {
 		}	
 	}
 
-	public List<String> loadMemberRolesByUsername() {
-		
-		return null;
+	public List<Member> loadMemberRolesByMemberId(int member_id){
+		TypedQuery<Member> query = manager.createQuery("select m from Member m join m.member_member_roles r where r.member_id=:member_id", Member.class)
+				  .setParameter("member_id", member_id);
+		return query.getResultList();
 	}
 	
-		
+	public List<Member> loadMemberRolesByMemberEmail(String member_email){
+		Member member=loadMemberByEmail(member_email);
+		TypedQuery<Member> query = manager.createQuery("select m from Member m join m.member_member_roles r where r.member_id=:member_id", Member.class)
+				  .setParameter("member", member.getMember_id());
+		return query.getResultList();
+	}
 }

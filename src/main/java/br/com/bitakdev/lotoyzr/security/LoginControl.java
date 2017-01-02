@@ -9,6 +9,7 @@ import org.jose4j.jwk.RsaJwkGenerator;
 import org.jose4j.jws.AlgorithmIdentifiers;
 import org.jose4j.jws.JsonWebSignature;
 import org.jose4j.jwt.JwtClaims;
+import org.jose4j.jwt.MalformedClaimException;
 import org.jose4j.jwt.consumer.InvalidJwtException;
 import org.jose4j.jwt.consumer.JwtConsumer;
 import org.jose4j.jwt.consumer.JwtConsumerBuilder;
@@ -39,7 +40,7 @@ public class LoginControl {
 	}
 
 	public Response authenticate(String member_email, String member_password){
-		member=memberDAO.loadMemberByUsername(member_email);
+		member=memberDAO.loadMemberByEmail(member_email);
 		if(checkPassword(member_email, member_password).equals("authentication_error")){
 			System.out.println("Erro de autenticação para o usuario " + member_email);
 			return Response.status(403).entity("authentication_error").build();
@@ -55,7 +56,7 @@ public class LoginControl {
 		claims.setIssuedAtToNow();
 		claims.setNotBeforeMinutesInThePast(5);
 		claims.setSubject(member.getMember_email());
-		claims.setStringListClaim(Constants.STRING_LIST_CLAIM, memberDAO.loadMemberRolesByUsername());
+		//claims.setStringListClaim(Constants.STRING_LIST_CLAIM, memberDAO.loadMemberRolesByMemberEmail(member.getMember_email()).stream().toArray(String[]::new));
 		
 		JsonWebSignature jws = new JsonWebSignature();
 		jws.setPayload(claims.toJson());
@@ -74,7 +75,7 @@ public class LoginControl {
 	}
 	
 	public String checkPassword(String member_email, String member_password) {
-		member=memberDAO.loadMemberByUsername(member_email);
+		member=memberDAO.loadMemberByEmail(member_email);
 		if(member==null){
 			return "member_not_found";
 		}
@@ -83,12 +84,13 @@ public class LoginControl {
 		}
 		return "member_authenticated";
 		}
+	
 
 	public Response authenticateToken(String JWT) {
 		System.out.println("LoginControl - authenticateToken - Start");
 		if(JWT==null){
 			System.out.println("LoginControl - authenticateToken - Invalid or Inexistent Token");
-			return Response.status(400).entity("token_inexistent").build();
+			return Response.status(400).entity("missing_token").build();
 		}
 		
 		JsonWebKey jwk = static_jwk;
@@ -113,4 +115,38 @@ public class LoginControl {
 		}
 		
 	}
+	
+	public String getLoggedMember(String JWT) {
+		System.out.println("LoginControl - authenticateToken - Start");
+		if(JWT==null){
+			System.out.println("LoginControl - authenticateToken - Invalid or Inexistent Token");
+			return "missing_token";
+		}
+		JsonWebKey jwk = static_jwk;
+		System.out.println("LoginControl - authenticateToken - JsonWebKey: "+jwk.toJson());
+		
+		JwtConsumer jwtConsumer = new JwtConsumerBuilder()
+				.setRequireExpirationTime()
+				.setAllowedClockSkewInSeconds(30)
+				.setRequireSubject()
+				.setExpectedIssuer(Constants.DOMAIN_NAME)
+				.setVerificationKey(jwk.getKey())
+				.build();
+		try {
+			JwtClaims jwtClaims = jwtConsumer.processToClaims(JWT);
+			System.out.println("LoginControl - authenticateToken - Token Validated Succesfully "+jwtClaims);
+			try {
+				return jwtConsumer.processToClaims(JWT).getSubject();
+			} catch (MalformedClaimException e) {
+				System.out.println("LoginControl - authenticateToken -Invalid Claim "+e);
+				e.printStackTrace();
+				return "invalid_claim";
+			}
+			
+		}catch(InvalidJwtException e){
+		System.out.println("LoginControl - authenticateToken -Invalid Token "+e);
+		return "invalid_token";
+		}
+		
 	}
+}

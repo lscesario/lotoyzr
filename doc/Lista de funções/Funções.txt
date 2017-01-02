@@ -1,7 +1,7 @@
 Conta
 Criar conta
 Associar responsável pela conta
-Definir valor do mês da conta
+Definir valor do mês da conta - OK
 Marcar/Desmarcar conta como valor fixo
 
 Membros
@@ -30,6 +30,10 @@ Remover item comprado da lista de compra
 Processar calculo do mês
 Enviar lembrete de pagamento de conta
 Registro de usuario
-Login de usuario
+Registro de usuario pelo facebook
+Login de usuario - OK
+Autenticação JWT de API - OK
+Hashear senhas
+
 
 

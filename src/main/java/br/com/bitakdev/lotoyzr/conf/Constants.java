@@ -9,5 +9,7 @@ public class Constants {
 	public static final int SESSION_TIME = 30;
 	public static final String DOMAIN_NAME = "lotoyzr.com";
 	public static final String STRING_LIST_CLAIM = "roles";
-	
+	public static final String RETURN_METHOD_OK = "everything_fine";
+	public static final String RETURN_METHOD_UNEXPECTED = "unexpected_error";
+	public static final String USER_NOT_ADMINISTRATOR="user_not_administrator";
 }
