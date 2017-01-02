@@ -8,18 +8,29 @@ import javax.transaction.Transactional;
 
 import br.com.bitakdev.lotoyzr.daos.BillDAO;
 import br.com.bitakdev.lotoyzr.models.Bill;
+import br.com.bitakdev.lotoyzr.util.HouseUtil;
 
 @Model
 public class BillControl {
 	
 	@Inject
 	BillDAO billDAO;
+	@Inject
+	HouseUtil houseUtil;
 	Calendar cal=Calendar.getInstance();
 	
 	@Transactional
 	public void createBill(Bill bill){
 		System.out.println(bill.toString());
 		try{
+	
+		/*if(houseUtil.checkMemberHouseAdmin(bill)){
+			
+		}*/
+			
+			
+			
+			
 		billDAO.createBill(bill);
 		}
 		catch(NullPointerException e){

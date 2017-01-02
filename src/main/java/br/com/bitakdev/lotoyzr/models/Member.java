@@ -20,7 +20,6 @@ public class Member {
 	private String member_bank_account;
 	private Calendar member_created_date;
 	
-	
 	public Integer getMember_id() {
 		return member_id;
 	}

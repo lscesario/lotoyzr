@@ -3,6 +3,7 @@ package br.com.bitakdev.lotoyzr.operations;
 import javax.enterprise.inject.Model;
 import javax.inject.Inject;
 import javax.transaction.Transactional;
+import javax.ws.rs.core.Response;
 
 import br.com.bitakdev.lotoyzr.daos.HouseDAO;
 import br.com.bitakdev.lotoyzr.daos.MemberDAO;
@@ -23,23 +24,27 @@ public class HouseControl {
 	HouseUtil houseUtil;
 	
 	@Transactional
-	public String createHouse(House house){
+	public Response createHouse(House house){
+		String response;
 		System.out.println(house.toString());
 		try{
-			if(houseUtil.checkHouseIntegrity(house).equals("tudo_certo")){
+			if(houseUtil.checkHouseIntegrityOnCreate(house).equals("tudo_certo")){
 			houseDAO.createHouse(house);
-			return "House "+house.getHouse_id()+" created";
+			response="house_"+house.getHouse_id()+"_created";
+			return Response.status(200).entity(response).build();
 				}
 			else
 				{
 				System.out.println("Um dos administradores associados a casa gerencia mais de quatro casas");
-				return "Um dos administradores associados a casa gerencia mais de quatro casas";
+				response = "member_exceed_administrator_limit";
+				return Response.status(400).entity(response).build();
 			}
 		}
 		catch(NullPointerException e){
 			System.out.println(e);
 		}
-		return "unexpected";
+		response="unexpected_error";
+		return Response.status(500).entity(response).build();
 	}
 	
 	public void removeHouseById(int house){

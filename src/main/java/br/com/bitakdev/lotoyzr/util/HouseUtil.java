@@ -7,12 +7,14 @@ import javax.inject.Inject;
 import br.com.bitakdev.lotoyzr.conf.Constants;
 import br.com.bitakdev.lotoyzr.daos.HouseDAO;
 import br.com.bitakdev.lotoyzr.daos.MemberDAO;
+import br.com.bitakdev.lotoyzr.models.Bill;
 import br.com.bitakdev.lotoyzr.models.House;
 import br.com.bitakdev.lotoyzr.models.Member;
 
 public class HouseUtil {
 	
 	Member member = new Member();
+	House house = new House();
 	
 	@Inject
 	HouseDAO houseDAO;
@@ -20,7 +22,7 @@ public class HouseUtil {
 	MemberDAO memberDAO;
 	
 	
-	public String checkHouseIntegrity(House house){
+	public String checkHouseIntegrityOnCreate(House house){
 		Iterator<Member> adminIterator = house.getHouse_administrators().iterator();
 		int counter=0;
 		while(adminIterator.hasNext()){
@@ -35,7 +37,7 @@ public class HouseUtil {
 				}
 			}
 		System.out.println("Tudo certo! checkHouseIntegrity");
-		return "tudo_certo";
+		return "fine";
 		}
 		
 	
@@ -47,7 +49,12 @@ public class HouseUtil {
 			return "membro_"+member.getMember_id()+"_administra_mais_de_4_casas";
 		}
 		System.out.println("Tudo certo! checkIfAdminOwnsFiveHouses");
-		return "tudo_certo";
+		return "fine";
+	}
+	
+	public String checkMemberHouseAdmin(Bill bill){
+		
+		return "fine";		
 	}
 	
 }
