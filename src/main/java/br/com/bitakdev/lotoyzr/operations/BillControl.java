@@ -37,6 +37,14 @@ public class BillControl {
 	public void createBill(Bill bill){
 		System.out.println(bill.toString());
 		try{
+	
+		/*if(houseUtil.checkMemberHouseAdmin(bill)){
+			
+		}*/
+			
+			
+			
+			
 		billDAO.createBill(bill);
 		}
 		catch(NullPointerException e){

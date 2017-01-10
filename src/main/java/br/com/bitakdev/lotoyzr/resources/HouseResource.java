@@ -6,6 +6,7 @@ import javax.ws.rs.BadRequestException;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
+import javax.ws.rs.HeaderParam;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
@@ -23,14 +24,18 @@ public class HouseResource {
 	@Inject
 	HouseControl hc;
 	
+	/**
+	 * @param house
+	 * @return
+	 */
 	@POST 
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Path("/create")
-	public Response createHouse(House house){
+	public Response createHouse(House house, @HeaderParam("session_user") int session_user){
+		System.out.println("Session user: "+session_user);
 		if (house == null) throw new BadRequestException();
-		hc.createHouse(house);
-		String result="House created: "+house;
-		return Response.status(201).entity(result).build();
+		Response response = hc.createHouse(house);
+		return response;
 	}
 	
 	@GET

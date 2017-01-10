@@ -35,7 +35,6 @@ public class Member {
 	private List<MemberRoles> member_roles;
 	private String member_email;
 	
-	
 	public Integer getMember_id() {
 		return member_id;
 	}

@@ -3,6 +3,7 @@ package br.com.bitakdev.lotoyzr.operations;
 import javax.enterprise.inject.Model;
 import javax.inject.Inject;
 import javax.transaction.Transactional;
+import javax.ws.rs.core.Response;
 
 import br.com.bitakdev.lotoyzr.conf.Constants;
 import br.com.bitakdev.lotoyzr.daos.HouseDAO;
@@ -24,23 +25,26 @@ public class HouseControl {
 	HouseUtil hu;
 	
 	@Transactional
-	public String createHouse(House house){
+	public Response createHouse(House house){
+		String response = null;
 		System.out.println(house.toString());
 		try{
 			if(hu.checkHouseIntegrity(house).equals(Constants.RETURN_METHOD_OK)){
 			houseDAO.createHouse(house);
-			return "House "+house.getHouse_id()+" created";
+			response="house_"+house.getHouse_id()+"_created";
+			return Response.status(200).entity(response).build();
 				}
 			else
 				{
 				System.out.println("Um dos administradores associados a casa gerencia mais de quatro casas");
-				return "admin_max_houses_reached";
+				return Response.status(400).entity(response).build();
 			}
 		}
 		catch(NullPointerException e){
 			System.out.println(e);
 		}
-		return Constants.RETURN_METHOD_UNEXPECTED;
+		response="unexpected_error";
+		return Response.status(500).entity(response).build();
 	}
 	
 	public void removeHouseById(int house){

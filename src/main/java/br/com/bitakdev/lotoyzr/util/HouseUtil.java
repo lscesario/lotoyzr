@@ -4,7 +4,6 @@ import java.util.Iterator;
 import java.util.List;
 
 import javax.inject.Inject;
-import javax.transaction.Transactional;
 
 import br.com.bitakdev.lotoyzr.conf.Constants;
 import br.com.bitakdev.lotoyzr.daos.HouseDAO;
@@ -57,6 +56,7 @@ public class HouseUtil {
 		return Constants.RETURN_METHOD_OK;
 	}
 	
+	
 	public String checkIfHouseAdmin(String member_email, int house_id){
 	   house=houseDAO.loadHouseById(house_id);
 	   member=memberDAO.loadMemberByEmail(member_email);
@@ -66,7 +66,6 @@ public class HouseUtil {
 	   if(member_roles.get(i).getRole_id()==Constants.ROLE_HOUSE_ADMINISTRATOR){
 	    		return Constants.RETURN_METHOD_OK;
 	    	}
-	   
 	   return Constants.USER_NOT_ADMINISTRATOR;
    }
 

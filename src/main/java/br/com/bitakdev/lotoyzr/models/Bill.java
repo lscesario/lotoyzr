@@ -3,7 +3,6 @@ package br.com.bitakdev.lotoyzr.models;
 
 
 import java.util.Calendar;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -32,14 +31,8 @@ public class Bill {
 	private House bill_house_owned;
 	private float bill_current_month_value;
 	private String bill_updated_by;
-	
-	public String getBill_status() {
-		return bill_status;
-	}
-	public void setBill_status(String bill_status) {
-		this.bill_status = bill_status;
-	}
 
+	
 	public int getBill_id() {
 		return bill_id;
 	}
@@ -52,12 +45,18 @@ public class Bill {
 	public void setBill_name(String bill_name) {
 		this.bill_name = bill_name;
 	}
+	public String getBill_status() {
+		return bill_status;
+	}
+	public void setBill_status(String bill_status) {
+		this.bill_status = bill_status;
+	}
 	public Calendar getBill_last_update_date() {
 		return bill_last_update_date;
 	}
 	public void setBill_last_update_date(Calendar bill_last_update_date) {
 		this.bill_last_update_date = bill_last_update_date;
-	}	
+	}
 	public Calendar getBill_created_date() {
 		return bill_created_date;
 	}
@@ -76,17 +75,17 @@ public class Bill {
 	public void setBill_responsible(Member bill_responsible) {
 		this.bill_responsible = bill_responsible;
 	}
-	public float getBill_current_month_value() {
-		return bill_current_month_value;
-	}
-	public void setBill_current_month_value(float bill_current_month_value) {
-		this.bill_current_month_value = bill_current_month_value;
-	}	
 	public House getBill_house_owned() {
 		return bill_house_owned;
 	}
 	public void setBill_house_owned(House bill_house_owned) {
 		this.bill_house_owned = bill_house_owned;
+	}
+	public float getBill_current_month_value() {
+		return bill_current_month_value;
+	}
+	public void setBill_current_month_value(float bill_current_month_value) {
+		this.bill_current_month_value = bill_current_month_value;
 	}
 	public String getBill_updated_by() {
 		return bill_updated_by;
@@ -94,7 +93,6 @@ public class Bill {
 	public void setBill_updated_by(String bill_updated_by) {
 		this.bill_updated_by = bill_updated_by;
 	}
-	
 	@Override
 	public String toString() {
 		return "Bill [bill_id=" + bill_id + ", bill_name=" + bill_name + ", bill_status=" + bill_status
