@@ -22,7 +22,7 @@ public class HouseDAO {
 	
 	private static final Logger LOGGER = Logger.getLogger( HouseDAO.class.getName());
 	
-	@PersistenceContext(type=PersistenceContextType.TRANSACTION)
+	@PersistenceContext(type=PersistenceContextType.EXTENDED)
 	private EntityManager manager;
 
 	public void createHouse(House house){
@@ -59,10 +59,9 @@ public class HouseDAO {
 	}
 	
 	public int sumMemberHouseAdminCount(Member member) {
-		TypedQuery<House> query = manager.createQuery("select h from House h join h.house_administrators a where a.member_id=:member", House.class)
+		TypedQuery<House> query = manager.createQuery("select h from House h join fetch h.house_administrators a where a.member_id=:member", House.class)
 				  .setParameter("member", member.getMember_id());
 		System.out.println("Numero de casas administradas: "+query.getResultList().size());
 		return query.getResultList().size();
 	}
-	
 }

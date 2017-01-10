@@ -48,6 +48,7 @@ public class BillControl {
 		billDAO.removeBillById(bill);
 	}
 	
+	@Transactional
 	public void updateBillById(int bill_id, Bill bill){
 		bill.setBill_last_update_date(cal);
 		billDAO.updateBillById(bill_id, bill);
@@ -58,17 +59,19 @@ public class BillControl {
 	}
 
 	public Response associateBillResponsible(int bill_id, int house_id, int member_id, String JWT) {
+		System.out.println("BillControl - associateBill - Start");
 		String member_email=lc.getLoggedMember(JWT);
 		if(member_email.equals("invalid_token")){
 			return Response.status(400).entity("invalid_token").build();
 		}
 		System.out.println("BillControl - associateBill - Got JWT: "+JWT);
 		if(hu.checkIfHouseAdmin(member_email, house_id).equals(Constants.RETURN_METHOD_OK)){
+			System.out.println("BillControl - associateBill - User Admin proceeding to associate Bill");
 			bu.associateBillResponsible(bill_id, house_id, member_id);
-		    return Response.status(201).entity("bill_associated_to_"+member_email).build();
+			System.out.println("BillControl - associateBill - End");
+		    return Response.status(201).entity("bill_associated_to_member_id_"+member_id).build();
 		}
-				
-		return null;
+		return Response.status(400).entity("logged_user_not_admin").build();
 	}
 
 }

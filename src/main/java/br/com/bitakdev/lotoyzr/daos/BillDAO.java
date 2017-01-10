@@ -23,18 +23,21 @@ public class BillDAO {
 	private EntityManager manager;
 	
 	public void createBill(Bill bill){
+		System.out.println("BillDAO - createBill - Start");
 		try{
 		manager.persist(bill);
-		LOGGER.log(Level.FINE, "Bill "+bill.toString()+" created");
+		System.out.println("BillDAO - createBill - Bill Created");
 		}
 		catch(PersistenceException e){
 			System.out.println(e);
 			LOGGER.log(Level.SEVERE,"Bill could not be created", e);
 		}
+		System.out.println("BillDAO - createBill - End");
 	}
 
 	public void updateBillById(int bill_id, Bill bill) {
-		System.out.println("Updating bill: "+bill_id+" with Values "+bill.toString());
+		System.out.println("BillDAO - updateBillById - Start");
+		System.out.println("BillDAO - updateBillById - Updating bill: "+bill_id+" with Values "+bill.toString());
 		Bill bill_to_be=loadBillById(bill_id);
 		System.out.println("Bill to be has been recovered: "+bill_to_be.toString());
 		bill_to_be=bill;
@@ -42,16 +45,22 @@ public class BillDAO {
 		System.out.println("Got values after swaping: "+bill.toString());
 		manager.merge(bill_to_be);
 		System.out.println("Bill: "+bill_id+" updated");
+		System.out.println("BillDAO - updateBillById - End");
 	}
 
 	public void removeBillById(int bill_id) {
+		System.out.println("BillDAO - removeBillById - Start");
 		Bill bill=loadBillById(bill_id);
 		manager.remove(bill);
 		System.out.println("Bill: "+bill.toString()+" removed");
+		System.out.println("BillDAO - removeBillById - End");
 	}
 	
 	public Bill loadBillById(Integer bill_id){
+		System.out.println("BillDAO - loadBillById - Start");
 		System.out.println("Retrieving bill id: "+bill_id);
+		System.out.println("BillDAO - loadBillById - End");
 		return manager.find(Bill.class, bill_id);
+		
 	}
 }

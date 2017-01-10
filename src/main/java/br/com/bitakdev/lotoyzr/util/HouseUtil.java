@@ -4,12 +4,15 @@ import java.util.Iterator;
 import java.util.List;
 
 import javax.inject.Inject;
+import javax.transaction.Transactional;
 
 import br.com.bitakdev.lotoyzr.conf.Constants;
 import br.com.bitakdev.lotoyzr.daos.HouseDAO;
 import br.com.bitakdev.lotoyzr.daos.MemberDAO;
+import br.com.bitakdev.lotoyzr.daos.MemberRolesDAO;
 import br.com.bitakdev.lotoyzr.models.House;
 import br.com.bitakdev.lotoyzr.models.Member;
+import br.com.bitakdev.lotoyzr.models.MemberRoles;
 
 public class HouseUtil {
 	
@@ -20,6 +23,8 @@ public class HouseUtil {
 	HouseDAO houseDAO;
 	@Inject
 	MemberDAO memberDAO;
+	@Inject
+	MemberRolesDAO memberRolesDAO;
 	
 	
 	public String checkHouseIntegrity(House house){
@@ -52,16 +57,16 @@ public class HouseUtil {
 		return Constants.RETURN_METHOD_OK;
 	}
 	
-   public String checkIfHouseAdmin(String member_email, int house_id){
+	public String checkIfHouseAdmin(String member_email, int house_id){
 	   house=houseDAO.loadHouseById(house_id);
 	   member=memberDAO.loadMemberByEmail(member_email);
-	   List<Member> member_roles=memberDAO.loadMemberRolesByMemberId(member.getMember_id());
-	   for(Member member : member_roles) {
-           System.out.println(member.getMember_roles());
-       }
-	   if(member_roles.contains("house_admin")){
-		   return Constants.RETURN_METHOD_OK;
-	   }
+	   List<MemberRoles> member_roles=memberRolesDAO.loadMemberRolesByMemberId(member.getMember_id());
+	   
+	   for(int i=0; i<member_roles.size(); i++)
+	   if(member_roles.get(i).getRole_id()==Constants.ROLE_HOUSE_ADMINISTRATOR){
+	    		return Constants.RETURN_METHOD_OK;
+	    	}
+	   
 	   return Constants.USER_NOT_ADMINISTRATOR;
    }
 

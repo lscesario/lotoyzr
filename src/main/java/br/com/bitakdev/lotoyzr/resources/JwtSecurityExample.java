@@ -117,7 +117,7 @@ public class JwtSecurityExample {
 		claims.setIssuedAtToNow();
 		claims.setNotBeforeMinutesInThePast(2);
 		claims.setSubject(member.getMember_name());
-		claims.setStringListClaim("roles", member.getMember_roles());
+		//claims.setStringListClaim("roles", member.getMember_roles());
 		
 		JsonWebSignature jws = new JsonWebSignature();
 		jws.setPayload(claims.toJson());

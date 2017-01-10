@@ -1,6 +1,6 @@
 Conta
-Criar conta
-Associar responsável pela conta
+Criar conta - OK
+Associar responsável pela conta - OK
 Definir valor do mês da conta - OK
 Marcar/Desmarcar conta como valor fixo
 

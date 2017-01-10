@@ -5,9 +5,13 @@ import java.util.List;
 
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 
 @Entity
 public class Member {
@@ -23,8 +27,12 @@ public class Member {
 	private Calendar member_created_date;
 	private String member_fb_id;
 	private String member_password;
-	@ElementCollection(targetClass=String.class)
-	private List<String> member_roles;
+	@ManyToMany(fetch = FetchType.LAZY)
+	@JoinTable(name = "member_memberroles", joinColumns = {
+			@JoinColumn(name = "member_id", nullable = false, updatable = false) },
+			inverseJoinColumns = { @JoinColumn(name = "role_id",
+					nullable = false, updatable = false) })
+	private List<MemberRoles> member_roles;
 	private String member_email;
 	
 	
@@ -77,10 +85,10 @@ public class Member {
 	public void setMember_password(String member_password) {
 		this.member_password = member_password;
 	}
-	public List<String> getMember_roles() {
+	public List<MemberRoles> getMember_roles() {
 		return member_roles;
 	}
-	public void setMember_roles(List<String> member_roles) {
+	public void setMember_roles(List<MemberRoles> member_roles) {
 		this.member_roles = member_roles;
 	}
 	public String getMember_email() {
@@ -92,9 +100,11 @@ public class Member {
 	@Override
 	public String toString() {
 		return "Member [member_id=" + member_id + ", member_name=" + member_name + ", member_age=" + member_age
-				+ ", member_bank=" + member_bank + ", member_bank_account=" + member_bank_account
-				+ ", member_created_date=" + member_created_date + ", member_fb_id=" + member_fb_id + "]";
+				+ ", member_bank=" + member_bank + ", member_bank_account=" + member_bank_account + ", member_fb_id="
+				+ member_fb_id + ", member_password=" + member_password + ", member_roles=" + member_roles
+				+ ", member_email=" + member_email + "]";
 	}
+	
 	public Member(){
 		this.member_created_date=Calendar.getInstance();
 	}

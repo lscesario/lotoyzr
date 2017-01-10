@@ -95,12 +95,9 @@ public class Bill {
 		this.bill_updated_by = bill_updated_by;
 	}
 	
-	
-	
 	@Override
 	public String toString() {
 		return "Bill [bill_id=" + bill_id + ", bill_name=" + bill_name + ", bill_status=" + bill_status
-				+ ", bill_last_update_date=" + bill_last_update_date + ", bill_created_date=" + bill_created_date
 				+ ", bill_description=" + bill_description + ", bill_responsible=" + bill_responsible
 				+ ", bill_house_owned=" + bill_house_owned + ", bill_current_month_value=" + bill_current_month_value
 				+ ", bill_updated_by=" + bill_updated_by + "]";
